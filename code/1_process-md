@@ -1,0 +1,46 @@
+# To do list
+
+1.load opentypefont.js on html
+1.2. mettre une font test 
+1.3. font to path -> link to (Move to m, Line to l, Curve to c, Quad to q, Close z) 
+
+2.3d
+3.mouseclick
+4.creation de arrte 3d de mouse to path
+5.box upload font
+
+## import font file 
+-> load open type font
+
+## utilisation de la font
+-> use font in sketch
+
+## Tranform font
+-> Check textToPoint p5
+-> Check textToPath
+-> Check textToContour
+-> Check textToModel
+
+## Curseur clicker 
+
+-> mouseclick
+
+
+## Mouse click pour crée des lignes
+
+-> Line Draw on Mouse Click Demo avec pas une ligne mais crée un point de fuite
+
+## Line to shapes
+
+->
+
+## Shapes a colorier
+
+->
+
+## Shapes to texture
+
+## Formes pixel to svg or png
+
+## export
+
