@@ -1,89 +1,45 @@
 
-// ---set up basique
-let font; 
-let msg = "HELLO"; 
-let fontPath; let size = 200;
-let points = [];
-
-// set up opentype load
-
-function setup() {
-  // BASE
-  createCanvas(windowWidth, windowHeight);
-  // ajout text to 3d
-    // createCanvas(200, 200, WEBGL);
-      // font = await 
-      // loadFont('https://fonts.gstatic.com/s/anton/v25/1Ptgg87LROyAm0K08i4gS7lu.ttf');
-
-
-  opentype.load("Fonts/SpaceMono-Bold.ttf", function(err, f) {
-    if (err) {
-      console.log(err);
-    } else {
-      font = f;
-    }
-    
-    fontPath = font.getPath("msg", 0, 0, size);
-  
-});
-// ajout text to 3d
-// geom = font.textToModel("Hello", 50, 0, { sampleFactor: 2 });
+// // ---set up basique
+// let font; 
+// let msg = "HELLO"; 
+// let fontPath; let size = 200;
+// let geom;
+// let points = [];
+// let size = 200;
+// let extrude = 5;
+// function setup() {
+// async function setup() {
+//   // ajout text to 3d
+//   font = await loadFont("Fonts/SpaceMono-Bold.ttf");
+//   textSize(size);
+//   geom = font.textToModel(msg, 0, 0, { extrude });
 //   geom.clearColors();
 //   geom.normalize();
-}
+//
+//     fontPath = font.getPath("msg", 0, 0, size);
+//
+//   background(220);
+//   orbitControl();
+//   rotateY(-0.2);
+//   rotateX(0.15);
+//   fill("red");
+//   noStroke();
+//   model(geom);
+//   describe(`3D extruded ${msg} in Space Mono, with depth ${extrude}. Drag to rotate.`);
+//       );
 
+//     } else if (command == "Q") {
+//       quadraticVertex (points[i].x1, points[i].y1,
+//         points[i].x, points[i].y
+//       );
 
+//     } else if (command == "Z"){
+//       endShape (CLOSE);
+//     }
+//   }
+//   }
 
-
-function draw() {
-  background("royalblue");
-  noFill();
-  stroke ("white");
-  strokeWeight (1.5);
-  translate(20, 200);
-
-  //ajout text to 3d
-  // background(255);
-  // orbitControl();
-  // fill("white");
-  // strokeWeight(4);
-  // scale(min(width, height) / 300);
-  // model(geom);
-
-  // points pour crée les lines
-  if (!fontPath) return;
-  points = fontPath.commands;
-  print (points);
-  // move to, line to, curve to, quad to, close
-  for (let i=0; i<points.length; i++) {
-    let command = points[i].type;
-    if(command == "M"){
-      beginShape ();
-      vertex (points[i].x, points[i].y
-      );
-
-    } else if (command == "L") {
-      vertex (points[i].x, points[i].y
-      );
-
-    } else if (command == "C") {
-      bezierVertex (points[i].x1, points[i].y1, 
-        points[i].x2, points[i].y2,
-        points[i].x, points[i].y
-      );
-
-    } else if (command == "Q") {
-      quadraticVertex (points[i].x1, points[i].y1,
-        points[i].x, points[i].y
-      );
-
-    } else if (command == "Z"){
-      endShape (CLOSE);
-    }
-  }
-  }
-
-// // vertext en rotation
+// vertext en rotation
 // let font;
 // let points = []; let msg = "hello!";
 // let size = 300;
@@ -92,11 +48,11 @@ function draw() {
 // function preload() {
 //   font = loadFont("Fonts/SpaceMono-Bold.ttf");
 // }
-
-// function setup() {
-//   createCanvas(800, 400);
-//   points = font.textToPoints(msg, 0, 0, size, {
-//     sampleFactor: 0.1,
+  // font = await loadFont("Fonts/SpaceMono-Bold.ttf");
+  // textSize(size);
+  // geom = font.textToModel(msg, 0, 0, { extrude });
+  // geom.clearColors();
+  // geom.normalize();
 //     simplifyThreshold: 0.0
 //   });
 //   angleMode(DEGREES);
@@ -114,7 +70,8 @@ function draw() {
   
 //   fill(255, 100);
 //   textSize(size);
-//   textFont(font);
+// let fontSize = 200;
+// let extrude = 5;
 //   text(msg, x, y);
   
 //   let increment = 2*sin(t);
@@ -125,11 +82,11 @@ function draw() {
 
 
 
-//let font;
+// let font;
 // let geom;
-
 // async function setup() {
 //   createCanvas(200, 200, WEBGL);
+//   font = await loadFont("Fonts/SpaceMono-Bold.ttf");
 
 //   // Alternative fonts:
 //   // Anton: 'https://fonts.gstatic.com/s/anton/v25/1Ptgg87LROyAm0K08i4gS7lu.ttf'
@@ -137,7 +94,7 @@ function draw() {
 //   // Source Serif: 'https://fonts.gstatic.com/s/sourceserif4/v8/vEFy2_tTDB4M7-auWDN0ahZJW3IX2ih5nk3AucvUHf6OAVIJmeUDygwjihdqrhxXD-wGvjU.ttf'
 
 //   // Using Source Serif for this example:
-//   font = await loadFont('https://fonts.gstatic.com/s/sourceserif4/v8/vEFy2_tTDB4M7-auWDN0ahZJW3IX2ih5nk3AucvUHf6OAVIJmeUDygwjihdqrhxXD-wGvjU.ttf');
+//   // font = await loadFont('https://fonts.gstatic.com/s/sourceserif4/v8/vEFy2_tTDB4M7-auWDN0ahZJW3IX2ih5nk3AucvUHf6OAVIJmeUDygwjihdqrhxXD-wGvjU.ttf');
 
 //   geom = font.textToModel("Hello", 50, 0, { sampleFactor: 2, extrude: 5 });
 //   geom.clearColors();
@@ -155,12 +112,12 @@ function draw() {
 // }
 
 
-// //----set up upload font 
-// //    let loadedFont = null;
-// //     let currentLetter = "A";
-// //     let currentSize = 300;
+//----set up upload font 
+//    let loadedFont = null;
+//     let currentLetter = "A";
+//     let currentSize = 300;
 
-// // ajout text to 3d
+// ajout text to 3d
 // let geom;
 
 
@@ -320,61 +277,102 @@ function draw() {
 
 
 
-// let font;
-// let msg = "HELLO";
-// let fontPath;
-// let size = 200
-// let points = [];
+let font;
+let geom;
+let msg = "HELLO";
+let fontSize = 200;
+let extrude = 50;
 
-// function setup() {
-//   // createCanvas(windowWidth, windowHeight);
-//   createCanvas(800, 400);
-  
+async function setup() {
+  createCanvas(windowWidth, windowHeight, WEBGL);
+  font = await loadFont("Fonts/SpaceMono-Bold.ttf");
+  textSize(fontSize);
+  geom = font.textToModel(msg, 0, 0, { extrude });
+  geom.clearColors();
+  geom.normalize();
 
-//   opentype.load("FONTS/SpaceMono-Bold.ttf", function(err, f){
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       font = f;
-//     }
+  const glyphButtons = document.getElementById("glyph-buttons");
+  for (const glyph of "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+!?=") {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "glyph-picker__button";
+    button.textContent = glyph;
+    button.setAttribute("aria-label", `Show ${glyph}`);
+    button.setAttribute("aria-pressed", "false");
+    button.addEventListener("click", () => selectGlyph(glyph, button));
+    glyphButtons.appendChild(button);
+  }
 
-//     fontPath = font.getPath(msg, 0, 0, size);
+  document.getElementById("export-svg").addEventListener("click", exportSvg);
+  document.getElementById("export-png").addEventListener("click", () => saveCanvas(exportBaseName(), "png"));
+  document.getElementById("export-stl").addEventListener("click", () => geom.saveStl(`${exportBaseName()}.stl`));
+  document.getElementById("export-obj").addEventListener("click", () => geom.saveObj(`${exportBaseName()}.obj`));
+}
 
-//   } );
-//   // randomBackground();
+function draw() {
+  background(220);
+  orbitControl();
+  rotateY(-0.2);
+  rotateX(0.15);
+  fill("red");
+  noStroke();
+  model(geom);
+  describe(`3D extruded ${msg} in Space Mono, depth ${extrude}. Drag to rotate.`);
+}
 
-// }
+function selectGlyph(glyph, selectedButton) {
+  msg = glyph;
+  const previousGeometry = geom;
+  geom = font.textToModel(msg, 0, 0, { extrude });
+  geom.clearColors();
+  geom.normalize();
+  if (previousGeometry) freeGeometry(previousGeometry);
 
-// function draw() {
-// // background("royalblue");
-// background(220);
-// nofill();
-// translate(20, 200);
+  document.querySelectorAll(".glyph-picker__button").forEach((button) => {
+    button.setAttribute("aria-pressed", String(button === selectedButton));
+  });
+}
 
-// points = fontPath.commands;
-// for (let i=0; i<points.length; i++) {
-//   let command = points[i].type;
-//   if (command == "M") {
-//    beginShape();
-//    vertex(points[i].x, points [i].y);
-//   }else if (command == "L") {
-//     vertex(points[i].x, points [i].y);
-//   } else if (command == "C") {
-//     bezierVertex(points[i].x1, points [i].y1, 
-//       points[i].x2, points [i].y2, 
-//       points[i].x, points [i].y);
-//   }else if (command == "Q") {
-//    quadraticVertex(points[i].x1, points [i].y1,
-//     points[i].x, points [i].y,
-//    );
-//   }else if (command == "Z") {
-//     endShape();
-//   }
-  
-    
-// } 
+function exportSvg() {
+  const commands = font.textToPaths(msg, 0, 0);
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
 
-// }
+  for (const [, ...coordinates] of commands) {
+    for (let i = 0; i < coordinates.length; i += 2) {
+      minX = Math.min(minX, coordinates[i]);
+      minY = Math.min(minY, coordinates[i + 1]);
+      maxX = Math.max(maxX, coordinates[i]);
+      maxY = Math.max(maxY, coordinates[i + 1]);
+    }
+  }
+
+  if (!Number.isFinite(minX)) return;
+
+  const padding = 2;
+  const pathData = commands
+    .map(([command, ...coordinates]) => `${command}${coordinates.length ? ` ${coordinates.join(" ")}` : ""}`)
+    .join(" ");
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${minX - padding} ${minY - padding} ${maxX - minX + padding * 2} ${maxY - minY + padding * 2}"><path d="${pathData}" fill="#ed1c24"/></svg>`;
+  downloadBlob(`${exportBaseName()}.svg`, new Blob([svg], { type: "image/svg+xml" }));
+}
+
+function exportBaseName() {
+  return /^[a-z0-9]+$/i.test(msg)
+    ? msg.toLowerCase()
+    : `glyph-${msg.codePointAt(0).toString(16)}`;
+}
+
+function downloadBlob(filename, blob) {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  link.click();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
 
 // function drawText(){
 //   let value = textInput.value
