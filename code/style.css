@@ -62,6 +62,46 @@ canvas {
   outline-offset: 2px;
 }
 
+.rotation-controls {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2;
+  width: 224px;
+  padding: 10px;
+  border: 1px solid #b8b8b8;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+  color: #333;
+  font-family: sans-serif;
+}
+
+.rotation-controls__title {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.rotation-controls__axis {
+  display: grid;
+  grid-template-columns: 12px minmax(0, 1fr) 46px;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.rotation-controls__axis input {
+  width: 100%;
+  margin: 0;
+  accent-color: #176b87;
+}
+
+.rotation-controls__axis output {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
 .export-toolbar {
   position: fixed;
   top: 16px;
@@ -129,6 +169,13 @@ canvas {
     justify-content: center;
     gap: 4px;
     padding: 6px;
+  }
+
+  .rotation-controls {
+    right: 8px;
+    bottom: 64px;
+    left: 8px;
+    width: auto;
   }
 
   .export-toolbar__label {

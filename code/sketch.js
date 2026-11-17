@@ -279,17 +279,35 @@
 
 let font;
 let geom;
+let contours;
+let geometryBounds;
+let canvasElement;
+let placedPoint = null;
+let extrusionLimit = 200;
 let msg = "HELLO";
 let fontSize = 200;
 let extrude = 50;
+const rotation = { x: 8.6, y: -11.5, z: 0 };
 
+//canvas set up
 async function setup() {
-  createCanvas(windowWidth, windowHeight, WEBGL);
+  canvasElement = createCanvas(windowWidth, windowHeight, WEBGL).elt;
   font = await loadFont("Fonts/SpaceMono-Bold.ttf");
   textSize(fontSize);
-  geom = font.textToModel(msg, 0, 0, { extrude });
-  geom.clearColors();
-  geom.normalize();
+  rebuildGlyph();
+
+  canvasElement.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+    const bounds = canvasElement.getBoundingClientRect();
+    placedPoint = {
+      x: (event.clientX - bounds.left) * width / bounds.width,
+      y: (event.clientY - bounds.top) * height / bounds.height
+    };
+    extrude = map(placedPoint.y, 0, height, 0, extrusionLimit);
+    const previousGeometry = geom;
+    rebuildGlyph();
+    if (previousGeometry) freeGeometry(previousGeometry);
+  });
 
   const glyphButtons = document.getElementById("glyph-buttons");
   for (const glyph of "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+!?=") {
@@ -303,6 +321,15 @@ async function setup() {
     glyphButtons.appendChild(button);
   }
 
+  for (const axis of ["x", "y", "z"]) {
+    const slider = document.getElementById(`rotation-${axis}`);
+    const value = document.getElementById(`rotation-${axis}-value`);
+    slider.addEventListener("input", () => {
+      rotation[axis] = Number(slider.value);
+      value.value = `${rotation[axis].toFixed(1)}\u00B0`;
+    });
+  }
+
   document.getElementById("export-svg").addEventListener("click", exportSvg);
   document.getElementById("export-png").addEventListener("click", () => saveCanvas(exportBaseName(), "png"));
   document.getElementById("export-stl").addEventListener("click", () => geom.saveStl(`${exportBaseName()}.stl`));
@@ -311,26 +338,101 @@ async function setup() {
 
 function draw() {
   background(220);
-  orbitControl();
-  rotateY(-0.2);
-  rotateX(0.15);
-  fill("red");
-  noStroke();
-  model(geom);
-  describe(`3D extruded ${msg} in Space Mono, depth ${extrude}. Drag to rotate.`);
+  push();
+  rotateY(radians(rotation.y));
+  rotateX(radians(rotation.x));
+  rotateZ(radians(rotation.z));
+  noFill();
+  stroke("red");
+  strokeWeight(1.5);
+  for (const contour of contours) {
+    for (const z of [geometryBounds.minZ, geometryBounds.maxZ]) {
+      beginShape();
+      for (const point of contour) {
+        vertex(point.x, point.y, z);
+      }
+      endShape(CLOSE);
+    }
+
+    beginShape(LINES);
+    for (const point of contour) {
+      vertex(point.x, point.y, geometryBounds.minZ);
+      vertex(point.x, point.y, geometryBounds.maxZ);
+    }
+    endShape();
+  }
+  pop();
+
+  push();
+  resetMatrix();
+  if (placedPoint) {
+    drawingContext.disable(drawingContext.DEPTH_TEST);
+    noStroke();
+    fill("red");
+    circle(placedPoint.x - width / 2, placedPoint.y - height / 2, 5);
+    drawingContext.enable(drawingContext.DEPTH_TEST);
+  }
+  pop();
+  describe(`Wireframe outlines of extruded ${msg} in Space Mono, depth ${extrude.toFixed(1)}. Right-click to set the extrusion depth.`);
 }
 
 function selectGlyph(glyph, selectedButton) {
   msg = glyph;
   const previousGeometry = geom;
-  geom = font.textToModel(msg, 0, 0, { extrude });
-  geom.clearColors();
-  geom.normalize();
+  rebuildGlyph();
   if (previousGeometry) freeGeometry(previousGeometry);
 
   document.querySelectorAll(".glyph-picker__button").forEach((button) => {
     button.setAttribute("aria-pressed", String(button === selectedButton));
   });
+}
+
+function rebuildGlyph() {
+  const sourceContours = font.textToContours(msg, 0, 0);
+  const sourcePoints = sourceContours.flat();
+  const sourceBounds = {
+    minX: Infinity,
+    maxX: -Infinity,
+    minY: Infinity,
+    maxY: -Infinity
+  };
+  for (const point of sourcePoints) {
+    sourceBounds.minX = Math.min(sourceBounds.minX, point.x);
+    sourceBounds.maxX = Math.max(sourceBounds.maxX, point.x);
+    sourceBounds.minY = Math.min(sourceBounds.minY, point.y);
+    sourceBounds.maxY = Math.max(sourceBounds.maxY, point.y);
+  }
+
+  extrusionLimit = Math.min(
+    fontSize,
+    Math.max(sourceBounds.maxX - sourceBounds.minX, sourceBounds.maxY - sourceBounds.minY)
+  );
+  extrude = Math.min(extrude, extrusionLimit);
+  geom = font.textToModel(msg, 0, 0, { extrude });
+  geom.clearColors();
+  geom.normalize();
+
+  geometryBounds = {
+    minX: Infinity,
+    maxX: -Infinity,
+    minY: Infinity,
+    maxY: -Infinity,
+    minZ: Infinity,
+    maxZ: -Infinity
+  };
+  for (const point of geom.vertices) {
+    geometryBounds.minX = Math.min(geometryBounds.minX, point.x);
+    geometryBounds.maxX = Math.max(geometryBounds.maxX, point.x);
+    geometryBounds.minY = Math.min(geometryBounds.minY, point.y);
+    geometryBounds.maxY = Math.max(geometryBounds.maxY, point.y);
+    geometryBounds.minZ = Math.min(geometryBounds.minZ, point.z);
+    geometryBounds.maxZ = Math.max(geometryBounds.maxZ, point.z);
+  }
+
+  contours = sourceContours.map((contour) => contour.map((point) => ({
+    x: map(point.x, sourceBounds.minX, sourceBounds.maxX, geometryBounds.minX, geometryBounds.maxX),
+    y: map(point.y, sourceBounds.minY, sourceBounds.maxY, geometryBounds.minY, geometryBounds.maxY)
+  })));
 }
 
 function exportSvg() {
