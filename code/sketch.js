@@ -288,6 +288,10 @@ let extrusionLimit = 200;
 let msg = "HELLO";
 let fontSize = 200;
 let extrude = 50;
+let backgroundColor = "#dcdcdc";
+let lineColor = "#ff0000";
+let bigPointColor = "#ff0000";
+let startingPointColor = "#ff0000";
 const rotation = { x: 8.6, y: -11.5, z: 0 };
 const pointSimplifyThreshold = 0.4;
 
@@ -331,6 +335,19 @@ async function setup() {
     });
   }
 
+  document.getElementById("background-color").addEventListener("input", (event) => {
+    backgroundColor = event.target.value;
+  });
+  document.getElementById("line-color").addEventListener("input", (event) => {
+    lineColor = event.target.value;
+  });
+  document.getElementById("big-point-color").addEventListener("input", (event) => {
+    bigPointColor = event.target.value;
+  });
+  document.getElementById("starting-point-color").addEventListener("input", (event) => {
+    startingPointColor = event.target.value;
+  });
+
   document.getElementById("export-svg").addEventListener("click", exportSvg);
   document.getElementById("export-png").addEventListener("click", () => saveCanvas(exportBaseName(), "png"));
   document.getElementById("export-stl").addEventListener("click", () => geom.saveStl(`${exportBaseName()}.stl`));
@@ -338,22 +355,20 @@ async function setup() {
 }
 
 function draw() {
-  background(220);
+  background(backgroundColor);
   push();
   rotateY(radians(rotation.y));
   rotateX(radians(rotation.x));
   rotateZ(radians(rotation.z));
   noFill();
-  stroke("red");
+  stroke(lineColor);
   strokeWeight(1.5);
   for (const contour of contours) {
-    for (const z of [geometryBounds.minZ, geometryBounds.maxZ]) {
-      beginShape();
-      for (const point of contour) {
-        vertex(point.x, point.y, z);
-      }
-      endShape(CLOSE);
+    beginShape();
+    for (const point of contour) {
+      vertex(point.x, point.y, geometryBounds.maxZ);
     }
+    endShape(CLOSE);
   }
   if (pointM) {
     beginShape(LINES);
@@ -365,6 +380,7 @@ function draw() {
     }
     endShape();
 
+    stroke(bigPointColor);
     strokeWeight(8);
     for (const contour of bigPointContours) {
       for (const contourPoint of contour) {
@@ -372,6 +388,7 @@ function draw() {
       }
     }
 
+    stroke(startingPointColor);
     strokeWeight(5);
     point(pointM.x, pointM.y, geometryBounds.minZ);
   }

@@ -13,10 +13,31 @@
   </head>
   <body>
     <main>
-      <aside class="glyph-picker" aria-label="Choose a glyph">
-        <h1 class="glyph-picker__title">GLYPHS</h1>
+      <details class="glyph-picker" aria-label="Choose a glyph" open>
+        <summary class="glyph-picker__title menu-toggle">GLYPHS</summary>
         <div id="glyph-buttons" class="glyph-picker__grid" role="group" aria-label="Font glyphs"></div>
-      </aside>
+      </details>
+      <details class="appearance-controls" aria-label="Appearance">
+        <summary class="appearance-controls__title menu-toggle">APPEARANCE</summary>
+        <div class="appearance-controls__fields">
+          <label class="appearance-controls__field" for="background-color">
+            <span>Background</span>
+            <input id="background-color" type="color" value="#dcdcdc">
+          </label>
+          <label class="appearance-controls__field" for="line-color">
+            <span>Lines / vertices</span>
+            <input id="line-color" type="color" value="#ff0000">
+          </label>
+          <label class="appearance-controls__field" for="big-point-color">
+            <span>Big points</span>
+            <input id="big-point-color" type="color" value="#ff0000">
+          </label>
+          <label class="appearance-controls__field" for="starting-point-color">
+            <span>Starting point</span>
+            <input id="starting-point-color" type="color" value="#ff0000">
+          </label>
+        </div>
+      </details>
       <section class="rotation-controls" aria-labelledby="rotation-controls-title">
         <h2 id="rotation-controls-title" class="rotation-controls__title">ROTATION</h2>
         <label class="rotation-controls__axis" for="rotation-x">
