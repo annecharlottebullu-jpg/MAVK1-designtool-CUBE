@@ -280,14 +280,16 @@
 let font;
 let geom;
 let contours;
+let bigPointContours;
 let geometryBounds;
 let canvasElement;
-let placedPoint = null;
+let pointM = null;
 let extrusionLimit = 200;
 let msg = "HELLO";
 let fontSize = 200;
 let extrude = 50;
 const rotation = { x: 8.6, y: -11.5, z: 0 };
+const pointSimplifyThreshold = 0.4;
 
 //canvas set up
 async function setup() {
@@ -299,11 +301,10 @@ async function setup() {
   canvasElement.addEventListener("contextmenu", (event) => {
     event.preventDefault();
     const bounds = canvasElement.getBoundingClientRect();
-    placedPoint = {
-      x: (event.clientX - bounds.left) * width / bounds.width,
-      y: (event.clientY - bounds.top) * height / bounds.height
+    pointM = {
+      x: (event.clientX - bounds.left) * width / bounds.width - width / 2,
+      y: (event.clientY - bounds.top) * height / bounds.height - height / 2
     };
-    extrude = map(placedPoint.y, 0, height, 0, extrusionLimit);
     const previousGeometry = geom;
     rebuildGlyph();
     if (previousGeometry) freeGeometry(previousGeometry);
@@ -353,27 +354,30 @@ function draw() {
       }
       endShape(CLOSE);
     }
-
+  }
+  if (pointM) {
     beginShape(LINES);
-    for (const point of contour) {
-      vertex(point.x, point.y, geometryBounds.minZ);
-      vertex(point.x, point.y, geometryBounds.maxZ);
+    for (const contour of bigPointContours) {
+      for (const contourPoint of contour) {
+        vertex(pointM.x, pointM.y, geometryBounds.minZ);
+        vertex(contourPoint.x, contourPoint.y, geometryBounds.maxZ);
+      }
     }
     endShape();
+
+    strokeWeight(8);
+    for (const contour of bigPointContours) {
+      for (const contourPoint of contour) {
+        point(contourPoint.x, contourPoint.y, geometryBounds.maxZ);
+      }
+    }
+
+    strokeWeight(5);
+    point(pointM.x, pointM.y, geometryBounds.minZ);
   }
   pop();
 
-  push();
-  resetMatrix();
-  if (placedPoint) {
-    drawingContext.disable(drawingContext.DEPTH_TEST);
-    noStroke();
-    fill("red");
-    circle(placedPoint.x - width / 2, placedPoint.y - height / 2, 5);
-    drawingContext.enable(drawingContext.DEPTH_TEST);
-  }
-  pop();
-  describe(`Wireframe outlines of extruded ${msg} in Space Mono, depth ${extrude.toFixed(1)}. Right-click to set the extrusion depth.`);
+  describe(`Wireframe outlines of extruded ${msg} in Space Mono, depth ${extrude.toFixed(1)}. Right-click to set the extrusion origin.`);
 }
 
 function selectGlyph(glyph, selectedButton) {
@@ -389,6 +393,9 @@ function selectGlyph(glyph, selectedButton) {
 
 function rebuildGlyph() {
   const sourceContours = font.textToContours(msg, 0, 0);
+  const pointContours = font.textToContours(msg, 0, 0, {
+    simplifyThreshold: pointSimplifyThreshold
+  });
   const sourcePoints = sourceContours.flat();
   const sourceBounds = {
     minX: Infinity,
@@ -429,7 +436,21 @@ function rebuildGlyph() {
     geometryBounds.maxZ = Math.max(geometryBounds.maxZ, point.z);
   }
 
+  if (pointM) {
+    pointM.z = map(pointM.y, -height / 2, height / 2, -fontSize / 2, fontSize / 2);
+    const zOffset = pointM.z - geometryBounds.minZ;
+    for (const point of geom.vertices) {
+      point.z += zOffset;
+    }
+    geometryBounds.minZ = pointM.z;
+    geometryBounds.maxZ += zOffset;
+  }
+
   contours = sourceContours.map((contour) => contour.map((point) => ({
+    x: map(point.x, sourceBounds.minX, sourceBounds.maxX, geometryBounds.minX, geometryBounds.maxX),
+    y: map(point.y, sourceBounds.minY, sourceBounds.maxY, geometryBounds.minY, geometryBounds.maxY)
+  })));
+  bigPointContours = pointContours.map((contour) => contour.map((point) => ({
     x: map(point.x, sourceBounds.minX, sourceBounds.maxX, geometryBounds.minX, geometryBounds.maxX),
     y: map(point.y, sourceBounds.minY, sourceBounds.maxY, geometryBounds.minY, geometryBounds.maxY)
   })));
