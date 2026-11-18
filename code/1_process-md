@@ -83,6 +83,12 @@ This glyph can be used in any project, mainly designed for big prints.
 -> once font file is loaded it will give the glyphs // let myPolice; - function preload(){ - myPolice = loadFont (https:// example.com);}
 -> loadfont + preload: font is awaited during async setup, the loading is then on demand since loadfont returns to a promise.
 
+## erasure of STL button / export
+-> on js and html
+
+## top bar menu création for glyphs, apperance and export
+-> top menu for glyph, apperance and export
+-> export is on the right side of the menu bar
 
 
 

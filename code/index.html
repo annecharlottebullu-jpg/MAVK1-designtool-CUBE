@@ -13,36 +13,50 @@
   </head>
   <body>
     <main>
-      <details class="glyph-picker" aria-label="Choose a glyph" open>
-        <summary class="glyph-picker__title menu-toggle">GLYPHS</summary>
-        <label id="font-dropzone" class="font-picker" for="font-upload">
-          <span>Drop a .ttf or .otf here, or browse</span>
-          <input id="font-upload" type="file" accept=".ttf,.otf,font/ttf,font/otf">
-        </label>
-        <p id="font-status" class="font-picker__status" role="status" aria-live="polite"></p>
-        <div id="glyph-buttons" class="glyph-picker__grid" role="group" aria-label="Font glyphs"></div>
-      </details>
-      <details class="appearance-controls" aria-label="Appearance">
-        <summary class="appearance-controls__title menu-toggle">APPEARANCE</summary>
-        <div class="appearance-controls__fields">
-          <label class="appearance-controls__field" for="background-color">
-            <span>Background</span>
-            <input id="background-color" type="color" value="#dcdcdc">
-          </label>
-          <label class="appearance-controls__field" for="line-color">
-            <span>Lines / vertices</span>
-            <input id="line-color" type="color" value="#ff0000">
-          </label>
-          <label class="appearance-controls__field" for="big-point-color">
-            <span>Big points</span>
-            <input id="big-point-color" type="color" value="#ff0000">
-          </label>
-          <label class="appearance-controls__field" for="starting-point-color">
-            <span>Starting point</span>
-            <input id="starting-point-color" type="color" value="#ff0000">
-          </label>
-        </div>
-      </details>
+      <nav class="top-menu-bar" aria-label="Design menus">
+        <details class="glyph-picker" aria-label="Choose a glyph">
+          <summary class="menu-toggle">GLYPHS</summary>
+          <div class="glyph-picker__panel menu-panel">
+            <label id="font-dropzone" class="font-picker" for="font-upload">
+              <span>Drop a .ttf or .otf here, or browse</span>
+              <input id="font-upload" type="file" accept=".ttf,.otf,font/ttf,font/otf">
+            </label>
+            <p id="font-status" class="font-picker__status" role="status" aria-live="polite"></p>
+            <div id="glyph-buttons" class="glyph-picker__grid" role="group" aria-label="Font glyphs"></div>
+          </div>
+        </details>
+        <details class="appearance-controls" aria-label="Appearance">
+          <summary class="menu-toggle">APPEARANCE</summary>
+          <div class="appearance-controls__panel menu-panel">
+            <div class="appearance-controls__fields">
+              <label class="appearance-controls__field" for="background-color">
+                <span>Background</span>
+                <input id="background-color" type="color" value="#dcdcdc">
+              </label>
+              <label class="appearance-controls__field" for="line-color">
+                <span>Vertices</span>
+                <input id="line-color" type="color" value="#ff0000">
+              </label>
+              <label class="appearance-controls__field" for="big-point-color">
+                <span> Contour points</span>
+                <input id="big-point-color" type="color" value="#ff0000">
+              </label>
+              <label class="appearance-controls__field" for="starting-point-color">
+                <span>Starting point</span>
+                <input id="starting-point-color" type="color" value="#ff0000">
+              </label>
+            </div>
+          </div>
+        </details>
+        <details class="export-menu">
+          <summary class="menu-toggle">EXPORT</summary>
+          <div class="export-toolbar__panel menu-panel" role="group" aria-label="Export glyph">
+            <button id="export-svg" type="button">SVG</button>
+            <button id="export-png" type="button">PNG</button>
+            <button id="export-obj" type="button">OBJ</button>
+          </div>
+        </details>
+      </nav>
       <section class="rotation-controls" aria-labelledby="rotation-controls-title">
         <h2 id="rotation-controls-title" class="rotation-controls__title">ROTATION</h2>
         <label class="rotation-controls__axis" for="rotation-x">
@@ -61,75 +75,7 @@
           <output id="rotation-z-value" for="rotation-z">0.0&deg;</output>
         </label>
       </section>
-      <div class="export-toolbar" role="group" aria-label="Export text">
-        <span class="export-toolbar__label">EXPORT</span>
-        <button id="export-svg" type="button">SVG</button>
-        <button id="export-png" type="button">PNG</button>
-        <button id="export-stl" type="button">STL</button>
-        <button id="export-obj" type="button">OBJ</button>
-      </div>
     </main>
     <script src="sketch.js"></script>
   </body>
 </html>
-
-
-<!-- <!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>p5 + opentype.js — Font Upload</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/opentype.js@1.3.4/dist/opentype.min.js"></script>
-  <style>
-    body { margin: 0; display: flex; flex-direction: column; align-items: center; font-family: sans-serif; background: #1a1a2e; color: #eee; }
-    #controls { padding: 20px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap; justify-content: center; }
-    input[type="file"] { color: #eee; }
-    input[type="text"] { padding: 5px 10px; width: 60px; font-size: 18px; text-align: center; }
-    canvas { border: 1px solid #333; margin-top: 10px; }
-  </style>
-</head>
-<body>
-  <div id="controls">
-    <label>
-      Police :
-      <input type="file" id="fontUpload" accept=".ttf,.otf,.woff" />
-    </label>
-    <label>
-      Lettre :
-      <input type="text" id="letterInput" value="A" maxlength="1" />
-    </label>
-    <label>
-      Taille :
-      <input type="range" id="sizeSlider" min="40" max="600" value="300" />
-    </label>
-  </div>
-
-  <script> -->
-
-
- <!-- <!DOCTYPE html>
-// <html lang="en">
-//   <head>
-   
-//     <meta charset="utf-8" />
-//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-//     <title>Sketch</title>
-
-//     <link rel="stylesheet" type="text/css" href="style.css">
-/ <script
-// src="https://cdnjs.cloudflare.com/ajax/lib
-// s/p5. js/1.9.0/p5.js">
-
-     
-//      <div   class="input-wrapper">
-//     <label for="textInput">Text input</label>
-//     <input 
-//     type="textInput" 
-//     placeholder="type me" 
-//     value="Hola les enfants" 
-//     id="textInput">
-//       </div> -->
-   <!-- <script src="sketch.js">
-

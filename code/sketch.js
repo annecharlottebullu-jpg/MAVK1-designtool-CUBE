@@ -42,6 +42,7 @@ async function setup() {
   });
 
   renderGlyphButtons(characters);
+  setupMenuBar();
   setupFontPicker();
   updateFontStatus(`Using ${getFontFamily(font)}`);
 
@@ -69,7 +70,6 @@ async function setup() {
 
   document.getElementById("export-svg").addEventListener("click", exportSvg);
   document.getElementById("export-png").addEventListener("click", () => saveCanvas(exportBaseName(), "png"));
-  document.getElementById("export-stl").addEventListener("click", () => geom.saveStl(`${exportBaseName()}.stl`));
   document.getElementById("export-obj").addEventListener("click", () => geom.saveObj(`${exportBaseName()}.obj`));
 }
 
@@ -100,7 +100,7 @@ function draw() {
     endShape();
 
     stroke(bigPointColor);
-    strokeWeight(8);
+    strokeWeight(4);
     for (const contour of bigPointContours) {
       for (const contourPoint of contour) {
         point(contourPoint.x, contourPoint.y, geometryBounds.maxZ);
@@ -152,6 +152,18 @@ function renderGlyphButtons(characters) {
     button.setAttribute("aria-pressed", String(glyph === msg));
     button.addEventListener("click", () => selectGlyph(glyph, button));
     glyphButtons.appendChild(button);
+  }
+}
+
+function setupMenuBar() {
+  const menus = document.querySelectorAll(".top-menu-bar details");
+  for (const menu of menus) {
+    menu.querySelector("summary").addEventListener("click", () => {
+      if (menu.open) return;
+      for (const otherMenu of menus) {
+        if (otherMenu !== menu) otherMenu.open = false;
+      }
+    });
   }
 }
 

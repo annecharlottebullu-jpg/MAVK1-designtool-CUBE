@@ -7,27 +7,45 @@ canvas {
   display: block;
 }
 
-.glyph-picker {
+.top-menu-bar {
   position: fixed;
-  top: 16px;
-  left: 16px;
-  z-index: 2;
-  width: 224px;
-  max-height: min(52vh, 360px);
-  overflow-y: auto;
-  padding: 10px;
-  border: 1px solid #b8b8b8;
-  border-radius: 6px;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 3;
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 6px 12px;
+  border-bottom: 1px solid #b8b8b8;
   background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
   color: #333;
   font-family: sans-serif;
 }
 
-.glyph-picker__title {
-  margin: 0 0 8px;
+.top-menu-bar > details {
+  position: relative;
+}
+
+.top-menu-bar > details > .menu-toggle {
+  min-height: 34px;
+  min-width: 92px;
+  box-sizing: border-box;
+  padding: 0 12px;
   font-size: 11px;
   font-weight: 700;
+}
+
+.appearance-controls > .menu-toggle {
+  min-width: 128px;
+}
+
+.export-menu > .menu-toggle {
+  min-width: 88px;
+}
+
+.export-menu {
+  margin-left: auto;
 }
 
 .menu-toggle {
@@ -53,12 +71,27 @@ canvas {
   outline-offset: 2px;
 }
 
-details[open] > .menu-toggle::after {
-  content: "-";
+.top-menu-bar > details[open] > .menu-toggle::after {
+  content: "\2212";
 }
 
-.glyph-picker:not([open]) .glyph-picker__title {
-  margin-bottom: 0;
+.menu-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 4;
+  padding: 10px;
+  border: 1px solid #b8b8b8;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+  color: #333;
+}
+
+.glyph-picker__panel {
+  width: 224px;
+  max-height: min(65vh, 480px);
+  overflow-y: auto;
 }
 
 .font-picker {
@@ -96,33 +129,14 @@ details[open] > .menu-toggle::after {
   display: none;
 }
 
-.appearance-controls {
-  position: fixed;
-  top: 76px;
-  right: 16px;
-  z-index: 2;
+.appearance-controls__panel {
   width: 224px;
-  max-height: min(52vh, 360px);
-  overflow-y: auto;
-  padding: 10px;
-  border: 1px solid #b8b8b8;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
-  color: #333;
-  font-family: sans-serif;
-}
-
-.appearance-controls__title {
-  margin: 0;
-  font-size: 11px;
-  font-weight: 700;
+  box-sizing: border-box;
 }
 
 .appearance-controls__fields {
   display: grid;
   gap: 8px;
-  margin-top: 8px;
 }
 
 .appearance-controls__field {
@@ -215,30 +229,15 @@ details[open] > .menu-toggle::after {
   font-variant-numeric: tabular-nums;
 }
 
-.export-toolbar {
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  z-index: 2;
+.export-toolbar__panel {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
   gap: 6px;
-  padding: 8px;
-  border: 1px solid #b8b8b8;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
-  color: #333;
-  font-family: sans-serif;
+  min-width: 88px;
 }
 
-.export-toolbar__label {
-  margin: 0 4px 0 2px;
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.export-toolbar button {
+.export-toolbar__panel button {
   min-width: 48px;
   height: 36px;
   padding: 0 10px;
@@ -252,67 +251,60 @@ details[open] > .menu-toggle::after {
   cursor: pointer;
 }
 
-.export-toolbar button:hover {
+.export-toolbar__panel button:hover {
   background: #e7e7e7;
 }
 
-.export-toolbar button:focus-visible {
+.export-toolbar__panel button:focus-visible {
   outline: 2px solid #176b87;
   outline-offset: 2px;
 }
 
 @media (max-width: 420px) {
-  .glyph-picker {
-    top: 8px;
-    left: 8px;
-    width: 188px;
-    max-height: 44vh;
-    padding: 8px;
+  .top-menu-bar {
+    gap: 2px;
+    padding: 5px 6px;
+  }
+
+  .top-menu-bar > details > .menu-toggle {
+    padding: 0 8px;
+  }
+
+  .top-menu-bar > details.glyph-picker > .menu-toggle {
+    min-width: 82px;
+  }
+
+  .top-menu-bar > details.appearance-controls > .menu-toggle {
+    min-width: 116px;
+  }
+
+  .top-menu-bar > details.export-menu > .menu-toggle {
+    min-width: 78px;
+  }
+
+  .glyph-picker__panel,
+  .appearance-controls__panel {
+    width: min(224px, calc(100vw - 16px));
   }
 
   .glyph-picker__grid {
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
-  .export-toolbar {
-    top: auto;
-    right: 8px;
-    bottom: 8px;
-    left: 8px;
-    justify-content: center;
-    gap: 4px;
-    padding: 6px;
+  .export-toolbar__panel {
+    right: 0;
+    left: auto;
   }
 
-  .appearance-controls {
-    top: 8px;
-    right: 8px;
-    width: 124px;
-    padding: 8px;
+  .export-toolbar__panel button {
+    min-width: 44px;
+    padding: 0 8px;
   }
 
   .rotation-controls {
     right: 8px;
-    bottom: 64px;
+    bottom: 8px;
     left: 8px;
     width: auto;
-  }
-
-  .export-toolbar__label {
-    margin-right: 2px;
-  }
-
-  .export-toolbar button {
-    min-width: 44px;
-    padding: 0 8px;
-  }
-}
-
-@media (max-width: 340px) {
-  .appearance-controls {
-    top: calc(8px + min(44vh, 360px) + 28px);
-    right: auto;
-    left: 8px;
-    width: 188px;
   }
 }
