@@ -15,6 +15,11 @@
     <main>
       <details class="glyph-picker" aria-label="Choose a glyph" open>
         <summary class="glyph-picker__title menu-toggle">GLYPHS</summary>
+        <label id="font-dropzone" class="font-picker" for="font-upload">
+          <span>Drop a .ttf or .otf here, or browse</span>
+          <input id="font-upload" type="file" accept=".ttf,.otf,font/ttf,font/otf">
+        </label>
+        <p id="font-status" class="font-picker__status" role="status" aria-live="polite"></p>
         <div id="glyph-buttons" class="glyph-picker__grid" role="group" aria-label="Font glyphs"></div>
       </details>
       <details class="appearance-controls" aria-label="Appearance">

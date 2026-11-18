@@ -1,282 +1,4 @@
 
-// // ---set up basique
-// let font; 
-// let msg = "HELLO"; 
-// let fontPath; let size = 200;
-// let geom;
-// let points = [];
-// let size = 200;
-// let extrude = 5;
-// function setup() {
-// async function setup() {
-//   // ajout text to 3d
-//   font = await loadFont("Fonts/SpaceMono-Bold.ttf");
-//   textSize(size);
-//   geom = font.textToModel(msg, 0, 0, { extrude });
-//   geom.clearColors();
-//   geom.normalize();
-//
-//     fontPath = font.getPath("msg", 0, 0, size);
-//
-//   background(220);
-//   orbitControl();
-//   rotateY(-0.2);
-//   rotateX(0.15);
-//   fill("red");
-//   noStroke();
-//   model(geom);
-//   describe(`3D extruded ${msg} in Space Mono, with depth ${extrude}. Drag to rotate.`);
-//       );
-
-//     } else if (command == "Q") {
-//       quadraticVertex (points[i].x1, points[i].y1,
-//         points[i].x, points[i].y
-//       );
-
-//     } else if (command == "Z"){
-//       endShape (CLOSE);
-//     }
-//   }
-//   }
-
-// vertext en rotation
-// let font;
-// let points = []; let msg = "hello!";
-// let size = 300;
-// let r = 15; let angle = 0; let t = 0;
-
-// function preload() {
-//   font = loadFont("Fonts/SpaceMono-Bold.ttf");
-// }
-  // font = await loadFont("Fonts/SpaceMono-Bold.ttf");
-  // textSize(size);
-  // geom = font.textToModel(msg, 0, 0, { extrude });
-  // geom.clearColors();
-  // geom.normalize();
-//     simplifyThreshold: 0.0
-//   });
-//   angleMode(DEGREES);
-// }
-
-// function draw() {
-//   background(255, 93, 100);
-//   stroke(255);
-//   let x = r*cos(angle);
-//   let y = r*sin(angle);
-//   translate(20, 300);
-//   for (let i=0; i<points.length; i++) {
-//     line(points[i].x, points[i].y, points[i].x + x, points[i].y + y);
-//   }
-  
-//   fill(255, 100);
-//   textSize(size);
-// let fontSize = 200;
-// let extrude = 5;
-//   text(msg, x, y);
-  
-//   let increment = 2*sin(t);
-//   t++;
-//   angle += increment;
-  
-// }
-
-
-
-// let font;
-// let geom;
-// async function setup() {
-//   createCanvas(200, 200, WEBGL);
-//   font = await loadFont("Fonts/SpaceMono-Bold.ttf");
-
-//   // Alternative fonts:
-//   // Anton: 'https://fonts.gstatic.com/s/anton/v25/1Ptgg87LROyAm0K08i4gS7lu.ttf'
-//   // Montserrat: 'https://fonts.gstatic.com/s/montserrat/v29/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Ew-Y3tcoqK5.ttf'
-//   // Source Serif: 'https://fonts.gstatic.com/s/sourceserif4/v8/vEFy2_tTDB4M7-auWDN0ahZJW3IX2ih5nk3AucvUHf6OAVIJmeUDygwjihdqrhxXD-wGvjU.ttf'
-
-//   // Using Source Serif for this example:
-//   // font = await loadFont('https://fonts.gstatic.com/s/sourceserif4/v8/vEFy2_tTDB4M7-auWDN0ahZJW3IX2ih5nk3AucvUHf6OAVIJmeUDygwjihdqrhxXD-wGvjU.ttf');
-
-//   geom = font.textToModel("Hello", 50, 0, { sampleFactor: 2, extrude: 5 });
-//   geom.clearColors();
-//   geom.normalize();
-// }
-
-// function draw() {
-//   background(255);
-//   orbitControl();
-//   fill("red");
-//   strokeWeight(4);
-//   scale(min(width, height) / 300);
-//   model(geom);
-//   describe('3D red extruded "Hello" in Source Serif on white, rotatable via mouse.');
-// }
-
-
-//----set up upload font 
-//    let loadedFont = null;
-//     let currentLetter = "A";
-//     let currentSize = 300;
-
-// ajout text to 3d
-// let geom;
-
-
-
-
-
-
-
-//     // --- Gestion de l'upload ---
-//     document.getElementById('fontUpload').addEventListener('change', (e) => {
-//       const file = e.target.files[0];
-//       if (!file) return;
-
-//       const reader = new FileReader();
-//       reader.onload = (event) => {
-//         const buffer = event.target.result;
-//         try {
-//           loadedFont = opentype.parse(buffer);
-//           console.log("Police chargée :", loadedFont.names.fontFamily.en);
-//         } catch (err) {
-//           console.error("Erreur de parsing :", err);
-//           alert("Impossible de parser cette police. Format supporté : .ttf, .otf");
-//         }
-//       };
-//       reader.readAsArrayBuffer(file);
-//     });
-
-//     document.getElementById('letterInput').addEventListener('input', (e) => {
-//       currentLetter = e.target.value || "A";
-//     });
-
-//     document.getElementById('sizeSlider').addEventListener('input', (e) => {
-//       currentSize = parseInt(e.target.value);
-//     });
-
-//   function setup() {
-//       createCanvas(windowWidth, windowHeight);
-//     }
-
-//     function draw() {
-//   background(26, 26, 46);
-//   if (!loadedFont) {
-//     fill(255);
-//     textAlign(CENTER, CENTER);
-//     textSize(20);
-//     text("Uploadez une police (.ttf ou .otf) pour commencer", width / 2, height / 2);
-//     return;
-//   }
-
-//   const glyph = loadedFont.charToGlyph(currentLetter);
-//   const path = glyph.getPath(0, 0, currentSize);
-
-//   const bbox = path.getBoundingBox();
-//   const glyphW = bbox.x2 - bbox.x1;
-//   const glyphH = bbox.y2 - bbox.y1;
-//   const offsetX = (width - glyphW) / 2 - bbox.x1;
-//   const offsetY = (height - glyphH) / 2 - bbox.y1;
-
-//   // Utiliser le contexte Canvas2D natif pour un rendu vectoriel correct
-//   const ctx = drawingContext;
-//   ctx.save();
-//   ctx.translate(offsetX, offsetY);
-
-//   ctx.beginPath();
-//   for (let cmd of path.commands) {
-//     switch (cmd.type) {
-//       case 'M':
-//         ctx.moveTo(cmd.x, cmd.y);
-//         break;
-//       case 'L':
-//         ctx.lineTo(cmd.x, cmd.y);
-//         break;
-//       case 'C':
-//         ctx.bezierCurveTo(cmd.x1, cmd.y1, cmd.x2, cmd.y2, cmd.x, cmd.y);
-//         break;
-//       case 'Q':
-//         ctx.quadraticCurveTo(cmd.x1, cmd.y1, cmd.x, cmd.y);
-//         break;
-//       case 'Z':
-//         ctx.closePath();
-//         break;
-//     }
-//   }
-
-//   ctx.strokeStyle = 'rgb(0, 220, 255)';
-//   ctx.lineWidth = 1.5;
-//   ctx.stroke();
-
-//   ctx.restore();
-
-//   fill(150);
-//   noStroke();
-//   textAlign(LEFT, TOP);
-//   textSize(12);
-//   text(loadedFont.names.fontFamily.en || "Police inconnue", 10, 10);
-// } --------
-
-    // function draw() {
-    //   background(26, 26, 46);
-
-    //   if (!loadedFont) {
-    //     fill(255);
-    //     textAlign(CENTER, CENTER);
-    //     textSize(20);
-    //     text("Uploadez une police (.ttf ou .otf) pour commencer", width / 2, height / 2);
-    //     return;
-    //   }
-    // }
-    //  // Dessiner le path en vecteur
-    //   push();
-    //   translate(offsetX, offsetY);
-
-    //   noFill();
-    //   stroke(0, 220, 255);
-    //   strokeWeight(1.5);
-
-    //   // Parcourir les commandes du path (M, L, C, Q, Z)
-    //   beginShape();
-    //   for (let cmd of path.commands) {
-    //     switch (cmd.type) {
-    //       case 'M':
-    //         vertex(cmd.x, cmd.y);
-    //         break;
-    //       case 'L':
-    //         vertex(cmd.x, cmd.y);
-    //         break;
-    //       case 'C':
-    //         bezierVertex(cmd.x1, cmd.y1, cmd.x2, cmd.y2, cmd.x, cmd.y);
-    //         break;
-    //       case 'Q':
-    //         // p5 n'a pas de quadraticCurveTo natif → conversion en cubic
-    //         const cx = cmd.x1, cy = cmd.y1;
-    //         const px = cmd.x, py = cmd.y;
-    //         // on approxime avec un bezier cubique
-    //         bezierVertex(cx, cy, cx, cy, px, py);
-    //         break;
-    //       case 'Z':
-    //         endShape(CLOSE);
-    //         beginShape();
-    //         break;
-    //     }
-    //   }
-    //   endShape(CLOSE);
-
-    //   pop();
-
-    //   // Afficher le nom de la police
-    //   fill(150);
-    //   noStroke();
-    //   textAlign(LEFT, TOP);
-    //   textSize(12);
-    //   text(loadedFont.names.fontFamily.en || "Police inconnue", 10, 10);
-
-
-
-
-
-
-
 let font;
 let geom;
 let contours;
@@ -285,21 +7,26 @@ let geometryBounds;
 let canvasElement;
 let pointM = null;
 let extrusionLimit = 200;
-let msg = "HELLO";
+let msg = "A";
 let fontSize = 200;
 let extrude = 50;
 let backgroundColor = "#dcdcdc";
 let lineColor = "#ff0000";
 let bigPointColor = "#ff0000";
 let startingPointColor = "#ff0000";
+let fontLoadRequest = 0;
 const rotation = { x: 8.6, y: -11.5, z: 0 };
 const pointSimplifyThreshold = 0.4;
 
-//canvas set up
 async function setup() {
-  canvasElement = createCanvas(windowWidth, windowHeight, WEBGL).elt;
   font = await loadFont("Fonts/SpaceMono-Bold.ttf");
+  canvasElement = createCanvas(windowWidth, windowHeight, WEBGL).elt;
   textSize(fontSize);
+  const characters = getFontCharacters(font);
+  if (!characters.length) {
+    throw new Error("The selected font does not contain any supported characters.");
+  }
+  if (!characters.includes(msg)) msg = characters[0];
   rebuildGlyph();
 
   canvasElement.addEventListener("contextmenu", (event) => {
@@ -314,17 +41,9 @@ async function setup() {
     if (previousGeometry) freeGeometry(previousGeometry);
   });
 
-  const glyphButtons = document.getElementById("glyph-buttons");
-  for (const glyph of "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+!?=") {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "glyph-picker__button";
-    button.textContent = glyph;
-    button.setAttribute("aria-label", `Show ${glyph}`);
-    button.setAttribute("aria-pressed", "false");
-    button.addEventListener("click", () => selectGlyph(glyph, button));
-    glyphButtons.appendChild(button);
-  }
+  renderGlyphButtons(characters);
+  setupFontPicker();
+  updateFontStatus(`Using ${getFontFamily(font)}`);
 
   for (const axis of ["x", "y", "z"]) {
     const slider = document.getElementById(`rotation-${axis}`);
@@ -394,7 +113,140 @@ function draw() {
   }
   pop();
 
-  describe(`Wireframe outlines of extruded ${msg} in Space Mono, depth ${extrude.toFixed(1)}. Right-click to set the extrusion origin.`);
+  describe(`Wireframe outline of ${msg} in ${getFontFamily(font)}, depth ${extrude.toFixed(1)}. Right-click to set the extrusion origin.`);
+}
+
+function getFontCharacters(loadedFont) {
+  const fontData = loadedFont?.data?._data;
+  if (!(fontData instanceof Uint8Array)) return [];
+  const buffer = fontData.buffer.slice(
+    fontData.byteOffset,
+    fontData.byteOffset + fontData.byteLength
+  );
+  const glyphSet = opentype.parse(buffer).glyphs;
+  if (!glyphSet || !Number.isInteger(glyphSet.length) || typeof glyphSet.get !== "function") {
+    return [];
+  }
+
+  const characters = new Set();
+  for (let index = 0; index < glyphSet.length; index += 1) {
+    const glyph = glyphSet.get(index);
+    const codePoints = glyph?.unicodes?.length ? glyph.unicodes : [glyph?.unicode];
+    for (const codePoint of codePoints) {
+      if (!Number.isInteger(codePoint) || codePoint < 0x20 || (codePoint >= 0x7f && codePoint <= 0x9f)) continue;
+      characters.add(String.fromCodePoint(codePoint));
+    }
+  }
+  return [...characters];
+}
+
+function renderGlyphButtons(characters) {
+  const glyphButtons = document.getElementById("glyph-buttons");
+  glyphButtons.replaceChildren();
+  for (const glyph of characters) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "glyph-picker__button";
+    button.textContent = glyph;
+    button.setAttribute("aria-label", `Show ${glyph}`);
+    button.setAttribute("aria-pressed", String(glyph === msg));
+    button.addEventListener("click", () => selectGlyph(glyph, button));
+    glyphButtons.appendChild(button);
+  }
+}
+
+function setupFontPicker() {
+  const input = document.getElementById("font-upload");
+  const dropzone = document.getElementById("font-dropzone");
+  input.addEventListener("change", () => {
+    const [file] = input.files;
+    input.value = "";
+    if (file) loadUploadedFont(file);
+  });
+
+  dropzone.addEventListener("dragover", (event) => {
+    event.preventDefault();
+    dropzone.classList.add("font-picker--dragover");
+  });
+  dropzone.addEventListener("dragleave", () => {
+    dropzone.classList.remove("font-picker--dragover");
+  });
+  dropzone.addEventListener("drop", (event) => {
+    event.preventDefault();
+    dropzone.classList.remove("font-picker--dragover");
+    const [file] = event.dataTransfer.files;
+    if (file) loadUploadedFont(file);
+  });
+}
+
+async function loadUploadedFont(file) {
+  const request = ++fontLoadRequest;
+  if (!/\.(ttf|otf)$/i.test(file.name)) {
+    updateFontStatus("Choose a .ttf or .otf font file.");
+    return;
+  }
+
+  const objectUrl = URL.createObjectURL(file);
+  updateFontStatus(`Loading ${file.name}...`);
+  try {
+    const loadedFont = await loadFont(objectUrl);
+    if (request !== fontLoadRequest) return;
+
+    const characters = getFontCharacters(loadedFont);
+    if (!characters.length) {
+      throw new Error("This font does not contain supported Unicode characters.");
+    }
+
+    const nextGlyph = characters.includes(msg) ? msg : characters[0];
+    const previousState = {
+      font,
+      msg,
+      geom,
+      contours,
+      bigPointContours,
+      geometryBounds,
+      extrusionLimit,
+      extrude,
+      pointM: pointM && { ...pointM }
+    };
+    font = loadedFont;
+    msg = nextGlyph;
+    try {
+      rebuildGlyph();
+    } catch (error) {
+      if (geom && geom !== previousState.geom) freeGeometry(geom);
+      font = previousState.font;
+      msg = previousState.msg;
+      geom = previousState.geom;
+      contours = previousState.contours;
+      bigPointContours = previousState.bigPointContours;
+      geometryBounds = previousState.geometryBounds;
+      extrusionLimit = previousState.extrusionLimit;
+      extrude = previousState.extrude;
+      pointM = previousState.pointM;
+      throw error;
+    }
+
+    freeGeometry(previousState.geom);
+    renderGlyphButtons(characters);
+    updateFontStatus(`Using ${getFontFamily(font)} (${file.name})`);
+  } catch (error) {
+    if (request === fontLoadRequest) {
+      const reason = error instanceof Error ? error.message : String(error);
+      updateFontStatus(`Could not load ${file.name}: ${reason}`);
+    }
+  } finally {
+    URL.revokeObjectURL(objectUrl);
+  }
+}
+
+function getFontFamily(loadedFont) {
+  const metadata = loadedFont?.metadata?.() || {};
+  return metadata.fontFamily?.en || metadata.family || loadedFont?.name || "Custom font";
+}
+
+function updateFontStatus(message) {
+  document.getElementById("font-status").textContent = message;
 }
 
 function selectGlyph(glyph, selectedButton) {
@@ -513,18 +365,3 @@ function downloadBlob(filename, blob) {
   link.click();
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
-
-// function drawText(){
-//   let value = textInput.value
-//   fill(handleTextColor());
-//   textAlign(CENTER, CENTER);
-//   textSize(handleFontSizeSlider());
-//   text(value, width / 2, height / 2);
-// }
-// function handleTextInput(){
-//   // handleFontSizeSlider();
-//    //.value acceder a n'importe quel input et lire l'attribut de html
-//   let textValue = textInput.value
-//   textAlign(CENTER,CENTER);
-//   text(textValue, width/2, height/2);
-// }
